@@ -1,0 +1,23 @@
+{
+  "name": "training_blog_5",
+  "description": "",
+  "main": "",
+  "authors": [
+    "NguyenManhThang <nguyen.manh.thang@framgia.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/nguyenmanhtam99/training_blog_5",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.7",
+    "bootstrap": "^3.3.7",
+    "jquery-ui": "^1.12.0"
+  }
+}
