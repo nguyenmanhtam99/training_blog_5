@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Models\User;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Auth;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -37,6 +39,8 @@ class AuthController extends Controller
      */
     public function __construct()
     {
+        $layout = config('common.layouts.login.default');
+        parent::__construct($layout);
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
@@ -68,5 +72,25 @@ class AuthController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function login(Request $request)
+    {
+        /**
+         * Validate form login
+         */
+        $this->validateLogin($request);
+
+        /**
+         * Check login
+         */
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect()->route('user.users.index');
+        }
+
+        /**
+         *Return if fail to login
+         */
+        return $this->sendFailedLoginResponse($request);
     }
 }

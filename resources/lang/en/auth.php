@@ -16,4 +16,35 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
+    /**
+     * Menu header
+     */
+    'testing' => 'Testing',
+    'login' => 'Login',
+    'register' => 'Register',
+    'logOut' => 'Logout',
+
+    /**
+     * Login
+     */
+    'login' => 'Login',
+    'or' => 'Or',
+    'emailAddress' => 'Email address',
+    'password' => 'Password',
+    'rememberMe' => 'Remember Me',
+    'forgotYourPassword' => 'Forgot Your Password',
+
+    /**
+     * Register
+     */
+    'register' => 'Register',
+    'name' => 'Name',
+    'confirmPassword' => 'Confirm Password',
+
+    /**
+     * Password reset
+     */
+    'clickHere' => 'Click here to reset your password:',
+    'resetPassword' => 'Reset Password',
+    'home' => 'Blog',
 ];

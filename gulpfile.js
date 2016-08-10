@@ -16,7 +16,7 @@ var files = {
     'jqueryBootstrap': './public/bower/bootstrap-sass/assets/javascripts/bootstrap.min.js',
     'jqueryUi': './public/bower/jquery-ui/jquery-ui.min.js',
     'jqueryUiImage': './public/bower/jquery-ui/themes/base/images/**',
-    'fontAwesome': './public/bower/font-awesome/fonts/**',
+    'fontAwesome': './public/bower/font-awesome/fonts/**'
 }
 
 elixir(function(mix) {
