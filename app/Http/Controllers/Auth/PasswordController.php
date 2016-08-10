@@ -27,6 +27,8 @@ class PasswordController extends Controller
      */
     public function __construct()
     {
+        $layout = config('common.layouts.login.default');
+        parent::__construct($layout);
         $this->middleware('guest');
     }
 }

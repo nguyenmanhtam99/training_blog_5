@@ -11,6 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'HomeController@index'
+]);
+;
+Route::get('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@showLoginForm']);
+Route::post('login', ['as' => 'auth.login', 'uses' => 'Auth\AuthController@login']);
+Route::get('logout', ['as' => 'auth.logout', 'uses' => 'Auth\AuthController@logout']);
+/**
+ * Registration Routes
+ */
+Route::get('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@showRegistrationForm']);
+Route::post('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController@register']);
+
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+    Route::group(['namespace' => 'User'], function () {
+        Route::resource('users','UserController');
+    });
 });
