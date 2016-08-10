@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Repositories\User\UserRepositoryInterface;
+use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Repositories\Entry\EntryRepositoryInterface;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\Http\Requests\CommentRequest;
+use App\Http\Requests\EntryRequest;
 
-class UserController extends Controller
+
+class EntryController extends Controller
 {
-    private $usertRepository;
+    private $entryRepository;
+    private $commentRepository;
 
-    public function __construct(UserRepositoryInterface $usertRepository)
+    public function __construct(EntryRepositoryInterface $entryRepository, CommentRepositoryInterface $commentRepository)
     {
         $layout = config('common.layouts.login.default');
         parent::__construct($layout);
-        $this->usertRepository = $usertRepository;
+        $this->entryRepository = $entryRepository;
+        $this->commentRepository = $commentRepository;
     }
     /**
      * Display a listing of the resource.
@@ -25,7 +32,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $entries = $this->entryRepository->paginate(config('common.paginate'));
+        return view('entry.index', compact('entries'));
     }
 
     /**
@@ -35,7 +43,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('entry.create');
     }
 
     /**
@@ -44,9 +52,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EntryRequest $request)
     {
-        //
+        $entry = $request->only('title', 'body');
+        $entry['user_id'] = Auth::user()->id;
+        $data = $this->entryRepository->create($entry);
+        if (!$data) {
+            return redirect()->route('user.users.index')
+                ->withErrors(['message' => trans('entry.not_found')]);
+        }
+        return redirect()->route('user.entry.index')->withSuccess(trans('session.entry_create_success'));
     }
 
     /**
@@ -57,6 +72,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $entry = $this->entryRepository->find($id);
+        $comments = $this->commentRepository->showComment($id);
+        return view('entry.show', compact('entry', 'comments'));
         
     }
 

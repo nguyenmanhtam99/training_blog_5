@@ -28,5 +28,7 @@ Route::post('register', ['as' => 'auth.register', 'uses' => 'Auth\AuthController
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::group(['namespace' => 'User'], function () {
         Route::resource('users','UserController');
+        Route::resource('entry','EntryController');
+        Route::resource('entry.comment','EntryCommentController');
     });
 });

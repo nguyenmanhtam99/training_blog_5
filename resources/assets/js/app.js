@@ -1,3 +1,8 @@
-/**
- * Created by framgia on 09/08/2016.
- */
+$('.success_show').hide(2000);
+
+$(document).ready(function () {
+
+    $('#comment').click(function() {
+        $('#commentProduct').show('fast');
+    });
+});

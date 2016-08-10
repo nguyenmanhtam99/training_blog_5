@@ -2,22 +2,28 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Repositories\User\UserRepositoryInterface;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Auth;
+use App\Repositories\Comment\CommentRepositoryInterface;
+use App\Repositories\Entry\EntryRepositoryInterface;
+use App\Http\Requests\CommentRequest;
 
-class UserController extends Controller
+class EntryCommentController extends Controller
 {
-    private $usertRepository;
+    private $entryRepository;
+    private $commentRepository;
 
-    public function __construct(UserRepositoryInterface $usertRepository)
+    public function __construct(EntryRepositoryInterface $entryRepository, CommentRepositoryInterface $commentRepository)
     {
         $layout = config('common.layouts.login.default');
         parent::__construct($layout);
-        $this->usertRepository = $usertRepository;
+        $this->entryRepository = $entryRepository;
+        $this->commentRepository = $commentRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,7 +31,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('home');
+        //
     }
 
     /**
@@ -44,9 +50,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CommentRequest $request, $id)
     {
-        //
+        $entry = $this->entryRepository->find($id);
+        $comment = [
+            'user_id' => Auth::user()->id,
+            'entry_id' => $entry->id,
+            'comment' => $request->comment,
+        ];
+        $this->commentRepository->create($comment);
+        return redirect()->route('user.entry.show', ['id' => $id]);
     }
 
     /**
@@ -57,7 +70,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        
+        //
     }
 
     /**

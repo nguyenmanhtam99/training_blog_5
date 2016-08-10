@@ -1,9 +1,13 @@
-@extends('layouts.app')
+@extends($layout)
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1">
+            <div class="col-md-2">
+                @include('layouts.leftMenu')
+            </div>
+
+            <div class="col-md-8 col-md-offset-1">
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ trans('common.dashboard')}}</div>
 
@@ -19,4 +23,5 @@
             </div>
         </div>
     </div>
-@endsection
+
+@stop
